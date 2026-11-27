@@ -1,0 +1,23 @@
+name: Deploy
+
+on:
+  push:
+    branches: [production]
+  workflow_dispatch:
+
+permissions:
+  contents: write # lets the workflow create the tag and release
+
+jobs:
+  ci:
+    uses: ./.github/workflows/ci.yml
+    secrets: inherit
+
+  deploy:
+    needs: ci
+    uses: BengelMedia/actions/.github/workflows/deploy.yml@main
+    with:
+      environment: production
+      # environment-url: https://example.com/
+      # bump: patch   # patch (default) | minor | major
+    secrets: inherit

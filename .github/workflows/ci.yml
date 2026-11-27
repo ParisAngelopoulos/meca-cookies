@@ -1,0 +1,16 @@
+name: CI
+
+on:
+  pull_request:
+    paths:
+      - "web/app/themes/bengel/**"
+      - ".github/workflows/**"
+  workflow_call: # Used by deploy.yml before deploying
+
+jobs:
+  build-theme:
+    name: Test theme build
+    uses: BengelMedia/actions/.github/workflows/build-theme.yml@main
+    with:
+      theme-directory: web/app/themes/bengel
+    secrets: inherit
